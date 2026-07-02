@@ -123,7 +123,8 @@ streamlit run app.py
 
 
 ### Prediction — Retention Actions
-*(Add screenshot here after deployment)*
+<img width="1258" height="890" alt="Screenshot 2026-07-01 173739" src="https://github.com/user-attachments/assets/53872666-2f4c-466f-b502-69a18128fcbc" />
+
 
 ---
 
