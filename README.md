@@ -119,7 +119,8 @@ streamlit run app.py
 
 
 ### Prediction — High Risk Customer
-*(Add screenshot here after deployment)*
+<img width="650" height="841" alt="Screenshot 2026-07-01 173624" src="https://github.com/user-attachments/assets/12275b78-d761-43e1-a5e7-f23ebf3063b6" />
+
 
 ### Prediction — Retention Actions
 *(Add screenshot here after deployment)*
