@@ -114,7 +114,9 @@ streamlit run app.py
 ## 📸 Screenshots
 
 ### Home — Input Form
-*(Add screenshot here after deployment)*
+<img width="1915" height="962" alt="Screenshot 2026-07-01 173534" src="https://github.com/user-attachments/assets/980c8e1f-50a1-4635-af10-38ad9996897d" />
+<img width="1918" height="975" alt="Screenshot 2026-07-01 173607" src="https://github.com/user-attachments/assets/5d0f70b8-f0a8-4dc2-8759-cbeb6f1596fd" />
+
 
 ### Prediction — High Risk Customer
 *(Add screenshot here after deployment)*
