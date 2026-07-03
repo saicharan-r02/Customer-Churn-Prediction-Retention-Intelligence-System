@@ -24,66 +24,65 @@ st.title("📊 Customer Churn Prediction & Retention Intelligence System")
 st.write("Predict which customers are at risk of leaving — and get a personalised plan to retain them.")
 st.divider()
 
-
 col1, col2, col3 = st.columns(3)
 
 with col1:
     st.subheader("📋 Account")
-    tenure    = st.slider("Tenure (months)", 0, 72, 12)
-    contract  = st.selectbox("Contract",
+    tenure    =st.slider("Tenure (months)", 0, 72, 12)
+    contract  =st.selectbox("Contract",
                     ["Month-to-month", "One year", "Two year"])
-    payment   = st.selectbox("Payment Method", [
+    payment   =st.selectbox("Payment Method", [
                     "Bank transfer (automatic)",
                     "Credit card (automatic)",
                     "Electronic check",
                     "Mailed check"])
-    paperless = st.selectbox("Paperless Billing", ["No", "Yes"])
+    paperless =st.selectbox("Paperless Billing", ["No", "Yes"])
 
 with col2:
     st.subheader("🌐 Services")
-    phone            = st.selectbox("Phone Service", ["No", "Yes"])
-    multiple_lines   = st.selectbox("Multiple Lines",
+    phone            =st.selectbox("Phone Service", ["No", "Yes"])
+    multiple_lines   =st.selectbox("Multiple Lines",
                             ["No", "No phone service", "Yes"])
-    internet         = st.selectbox("Internet Service",
+    internet         =st.selectbox("Internet Service",
                             ["DSL", "Fiber optic", "No"])
-    online_security  = st.selectbox("Online Security",
+    online_security  =st.selectbox("Online Security",
                             ["No", "No internet service", "Yes"])
-    online_backup    = st.selectbox("Online Backup",
+    online_backup    =st.selectbox("Online Backup",
                             ["No", "No internet service", "Yes"])
-    device_prot      = st.selectbox("Device Protection",
+    device_prot      =st.selectbox("Device Protection",
                             ["No", "No internet service", "Yes"])
-    tech_support     = st.selectbox("Tech Support",
+    tech_support     =st.selectbox("Tech Support",
                             ["No", "No internet service", "Yes"])
-    streaming_tv     = st.selectbox("Streaming TV",
+    streaming_tv     =st.selectbox("Streaming TV",
                             ["No", "No internet service", "Yes"])
-    streaming_movies = st.selectbox("Streaming Movies",
+    streaming_movies =st.selectbox("Streaming Movies",
                             ["No", "No internet service", "Yes"])
 
 with col3:
     st.subheader("👤 Demographics & Charges")
-    gender          = st.selectbox("Gender", ["Female", "Male"])
-    senior          = st.selectbox("Senior Citizen", ["No", "Yes"])
-    partner         = st.selectbox("Partner", ["No", "Yes"])
-    dependents      = st.selectbox("Dependents", ["No", "Yes"])
-    monthly_charges = st.slider("Monthly Charges ($)", 18.0, 120.0, 65.0)
-    total_charges   = st.number_input(
-                        "Total Charges ($)", min_value=0.0, max_value=9000.0,
-                        value=float(round(monthly_charges * max(tenure, 1), 2)))
+    gender          =st.selectbox("Gender", ["Female", "Male"])
+    senior          =st.selectbox("Senior Citizen", ["No", "Yes"])
+    partner         =st.selectbox("Partner", ["No", "Yes"])
+    dependents      =st.selectbox("Dependents", ["No", "Yes"])
+    monthly_charges =st.slider("Monthly Charges ($)", 18.0, 120.0, 65.0)
+    total_charges   =st.number_input(
+                        "Total Charges ($)",min_value=0.0,max_value=9000.0,
+                        value=float(round(monthly_charges*max(tenure,1),2)))
 
 st.divider()
 
 def get_retention_intelligence():
     """
     Analyse this customer's profile and return:
-      - risk_factors : list of strings explaining WHY they might churn
-      - actions      : list of (title, description) specific retention steps
+      - risk_factors :list of strings explaining WHY they might churn
+      - actions      :list of (title, description) specific retention steps
     Based on EDA insights from the training dataset.
     """
-    risk_factors = []
-    actions      = []
+    risk_factors =[]
+    actions      =[]
 
 
-    if contract == "Month-to-month":
+    if contract =="Month-to-month":
         risk_factors.append(
             "Month-to-month contract — these customers have a 43% churn rate "
             "vs only 3% for 2-year contracts")
