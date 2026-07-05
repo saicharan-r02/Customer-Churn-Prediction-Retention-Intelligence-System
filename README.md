@@ -1,11 +1,10 @@
 # 📊 Customer Churn Prediction & Retention Intelligence System
 
-> Predict which telecom customers are at risk of leaving — and get a personalised, data-driven plan to retain them.
+> Predict which telecom customers are at risk of leaving — and get a personalised,data-driven plan to retain them.
 
 🔴 **Live Demo**: [Click here to try the app](https://customer-churn-prediction-retention-intelligence-system-npqtfh.streamlit.app)
 
 ---
-
 ## 🎯 Problem Statement
 
 Customer churn is one of the most costly problems in the telecom industry. Acquiring a new customer costs **5–7× more** than retaining an existing one. Yet most companies only act after a customer has already left.
@@ -142,15 +141,13 @@ streamlit run app.py
 The training notebook (`Customer_Churn_Project.ipynb`) covers:
 
 1. Data loading & initial exploration
-2. Data cleaning (TotalCharges fix, null handling, encoding)
+2. Data cleaning (TotalCharges fix,null handling,encoding)
 3. Exploratory Data Analysis — 12 plots across demographics and services
-4. Feature preprocessing (LabelEncoder + get_dummies + StandardScaler)
+4. Feature preprocessing (LabelEncoder+get_dummies+StandardScaler)
 5. Model building & comparison (LR vs RF vs GB)
 6. ROC curve comparison + feature importance plot
 7. Final results — confusion matrix + classification report
 
 ---
-
 ## 👨‍💻 Author
-
 Built as an end-to-end machine learning project demonstrating data cleaning, EDA, model selection, and production deployment with a business-focused retention intelligence layer.
