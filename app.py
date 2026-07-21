@@ -6,13 +6,13 @@ import json
 
 @st.cache_resource
 def load_model():
-    model  = joblib.load('rf_model.pkl')
-    scaler = joblib.load('scaler.pkl')
+    model=joblib.load('rf_model.pkl')
+    scaler=joblib.load('scaler.pkl')
     with open('columns.json') as f:
-        columns = json.load(f)
-    return model, scaler, columns
+        columns=json.load(f)
+    return model,scaler,columns
 
-model, scaler, columns = load_model()
+model,scaler,columns=load_model()
 
 st.set_page_config(
     page_title="Churn Prediction & Retention Intelligence",
@@ -24,7 +24,7 @@ st.title("📊 Customer Churn Prediction & Retention Intelligence System")
 st.write("Predict which customers are at risk of leaving — and get a personalised plan to retain them.")
 st.divider()
 
-col1, col2, col3 = st.columns(3)
+col1,col2,col3=st.columns(3)
 
 with col1:
     st.subheader("📋 Account")
@@ -82,7 +82,7 @@ def get_retention_intelligence():
     actions      =[]
 
 
-    if contract =="Month-to-month":
+    if contract=="Month-to-month":
         risk_factors.append(
             "Month-to-month contract — these customers have a 43% churn rate "
             "vs only 3% for 2-year contracts")
@@ -92,7 +92,7 @@ def get_retention_intelligence():
             "or a 2-year contract with 25% discount"))
 
 
-    if internet == "Fiber optic":
+    if internet=="Fiber optic":
         risk_factors.append(
             "Fiber optic subscriber — churns 2× more than DSL users "
             "(likely due to higher cost and more competition)")
@@ -101,14 +101,13 @@ def get_retention_intelligence():
                 "🛡️ Free security bundle",
                 "Add Online Security + Device Protection free for 3 months "
                 "— increases service stickiness"))
-        if tech_support == "No":
+        if tech_support=="No":
             actions.append((
                 "🛠️ Tech support upgrade",
                 "Offer Tech Support package at 50% off for the first year "
                 "to reduce service frustration"))
 
-    
-    if payment == "Electronic check":
+    if payment=="Electronic check":
         risk_factors.append(
             "Electronic check payment — highest churn rate among all payment methods, "
             "linked to manual payment friction")
@@ -118,7 +117,7 @@ def get_retention_intelligence():
             "bank transfer or credit card auto-pay"))
 
 
-    if tenure < 12:
+    if tenure<12:
         risk_factors.append(
             f"Low tenure ({tenure} months) — 68% of all churners leave within "
             "the first 12 months before building loyalty")
@@ -127,9 +126,8 @@ def get_retention_intelligence():
             "Assign a dedicated account manager for first year + "
             f"offer a loyalty gift at 12-month mark (e.g. 1 month free)"))
 
-
-    if monthly_charges > 80:
-        saving = round(monthly_charges * 0.10, 2)
+    if monthly_charges>80:
+        saving=round(monthly_charges*0.10, 2)
         risk_factors.append(
             f"High monthly charges (${monthly_charges:.0f}) — "
             "above-average bill increases price sensitivity and competitor appeal")
@@ -139,7 +137,7 @@ def get_retention_intelligence():
             "for a 6-month service commitment"))
 
 
-    if senior == "Yes" and tech_support == "No":
+    if senior=="Yes" and tech_support=="No":
         risk_factors.append(
             "Senior citizen without tech support — "
             "higher likelihood of service frustration and passive churn")
@@ -149,9 +147,9 @@ def get_retention_intelligence():
             "customer service line for senior accounts"))
 
 
-    has_internet = (internet != "No")
-    no_streaming = (streaming_tv == "No" and streaming_movies == "No" and has_internet)
-    no_security  = (online_security == "No" and online_backup == "No" and has_internet)
+    has_internet=(internet!="No")
+    no_streaming=(streaming_tv=="No" and streaming_movies=="No" and has_internet)
+    no_security=(online_security=="No" and online_backup=="No" and has_internet)
 
     if no_streaming and no_security:
         actions.append((
@@ -164,7 +162,6 @@ def get_retention_intelligence():
             "Free 3-month Streaming TV + Movies trial — "
             "customers with streaming services churn significantly less"))
 
-
     if not risk_factors:
         risk_factors.append("No major risk factors detected for this customer")
         actions.append((
@@ -172,9 +169,7 @@ def get_retention_intelligence():
             "Customer is satisfied — consider upselling premium services "
             "or offering a loyalty reward at next contract renewal"))
 
-    return risk_factors[:3], actions[:3]
-
-
+    return risk_factors[:3],actions[:3]
 
 if st.button("🔍 Predict & Get Retention Plan",
              use_container_width=True, type="primary"):
@@ -190,12 +185,12 @@ if st.button("🔍 Predict & Get Retention Plan",
     }
 
     input_dict = {
-        'gender':           0 if gender == "Female" else 1,
-        'SeniorCitizen':    1 if senior == "Yes" else 0,
-        'Partner':          0 if partner == "No" else 1,
-        'Dependents':       0 if dependents == "No" else 1,
+        'gender':           0 if gender=="Female" else 1,
+        'SeniorCitizen':    1 if senior=="Yes" else 0,
+        'Partner':          0 if partner=="No" else 1,
+        'Dependents':       0 if dependents=="No" else 1,
         'tenure':           tenure,
-        'PhoneService':     0 if phone == "No" else 1,
+        'PhoneService':     0 if phone=="No" else 1,
         'MultipleLines':    le_3val['MultipleLines'][multiple_lines],
         'OnlineSecurity':   le_3val['OnlineSecurity'][online_security],
         'OnlineBackup':     le_3val['OnlineBackup'][online_backup],
@@ -203,52 +198,51 @@ if st.button("🔍 Predict & Get Retention Plan",
         'TechSupport':      le_3val['TechSupport'][tech_support],
         'StreamingTV':      le_3val['StreamingTV'][streaming_tv],
         'StreamingMovies':  le_3val['StreamingMovies'][streaming_movies],
-        'PaperlessBilling': 0 if paperless == "No" else 1,
+        'PaperlessBilling': 0 if paperless=="No" else 1,
         'MonthlyCharges':   monthly_charges,
         'TotalCharges':     total_charges,
-        'InternetService_Fiber optic': 1 if internet == "Fiber optic" else 0,
-        'InternetService_No':          1 if internet == "No" else 0,
-        'Contract_One year':           1 if contract == "One year" else 0,
-        'Contract_Two year':           1 if contract == "Two year" else 0,
+        'InternetService_Fiber optic': 1 if internet=="Fiber optic" else 0,
+        'InternetService_No':          1 if internet=="No" else 0,
+        'Contract_One year':           1 if contract=="One year" else 0,
+        'Contract_Two year':           1 if contract=="Two year" else 0,
         'PaymentMethod_Credit card (automatic)':
-            1 if payment == "Credit card (automatic)" else 0,
+            1 if payment=="Credit card (automatic)" else 0,
         'PaymentMethod_Electronic check':
-            1 if payment == "Electronic check" else 0,
+            1 if payment=="Electronic check" else 0,
         'PaymentMethod_Mailed check':
-            1 if payment == "Mailed check" else 0,
+            1 if payment=="Mailed check" else 0,
     }
 
-    input_df = pd.DataFrame([input_dict])
-    input_df = input_df[columns]
+    input_df=pd.DataFrame([input_dict])
+    input_df=input_df[columns]
 
-    scaled = scaler.transform(input_df)
-    pred   = model.predict(scaled)[0]
-    prob   = model.predict_proba(scaled)[0][1]
+    scaled=scaler.transform(input_df)
+    pred =model.predict(scaled)[0]
+    prob =model.predict_proba(scaled)[0][1]
 
 
-    if prob < 0.30:
-        risk_level, risk_icon = "LOW",    "✅"
+    if prob<0.30:
+        risk_level,risk_icon="LOW", "✅"
     elif prob < 0.60:
-        risk_level, risk_icon = "MEDIUM", "⚠️"
+        risk_level, risk_icon="MEDIUM", "⚠️"
     else:
-        risk_level, risk_icon = "HIGH",   "🚨"
+        risk_level, risk_icon="HIGH", "🚨"
 
- 
-    left, right = st.columns([1, 2])
+    left,right=st.columns([1, 2])
 
     with left:
         st.markdown("### Churn Risk Score")
-        if risk_level == "LOW":
+        if risk_level=="LOW":
             st.success(f"{risk_icon} **{risk_level} RISK**\n\n"
                        f"Churn probability: **{prob*100:.1f}%**")
-        elif risk_level == "MEDIUM":
+        elif risk_level=="MEDIUM":
             st.warning(f"{risk_icon} **{risk_level} RISK**\n\n"
                        f"Churn probability: **{prob*100:.1f}%**")
         else:
             st.error(f"{risk_icon} **{risk_level} RISK**\n\n"
                      f"Churn probability: **{prob*100:.1f}%**")
 
-        st.progress(prob, text=f"{prob*100:.1f}% likelihood to leave")
+        st.progress(prob,text=f"{prob*100:.1f}% likelihood to leave")
 
         st.markdown("**Risk thresholds:**")
         st.markdown("- 🟢 0–30% → Low risk")
@@ -256,7 +250,7 @@ if st.button("🔍 Predict & Get Retention Plan",
         st.markdown("- 🔴 60–100% → High risk")
 
     with right:
-        risk_factors, actions = get_retention_intelligence()
+        risk_factors,actions=get_retention_intelligence()
 
         st.markdown("### 🎯 Why This Customer Is at Risk")
         if risk_factors and risk_factors[0] != "No major risk factors detected for this customer":
