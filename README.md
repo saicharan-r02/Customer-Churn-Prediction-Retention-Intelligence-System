@@ -2,7 +2,7 @@
 
 > Predict which telecom customers are at risk of leaving — and get a personalised,data-driven plan to retain them.
 
-🔴 **Live Demo**: [Click here to try the app](https://customer-churn-prediction-retention-intelligence-system-npqtfh.streamlit.app)
+🔴 **Live Demo**: [Click here to try the app](https://customer-cpris-7044.streamlit.app/)
 
 ---
 ## 🎯 Problem Statement
