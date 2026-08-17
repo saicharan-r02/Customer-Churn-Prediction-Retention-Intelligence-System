@@ -29,45 +29,30 @@ col1,col2,col3=st.columns(3)
 with col1:
     st.subheader("📋 Account")
     tenure    =st.slider("Tenure (months)", 0, 72, 12)
-    contract  =st.selectbox("Contract",
-                    ["Month-to-month", "One year", "Two year"])
-    payment   =st.selectbox("Payment Method", [
-                    "Bank transfer (automatic)",
-                    "Credit card (automatic)",
-                    "Electronic check",
-                    "Mailed check"])
-    paperless =st.selectbox("Paperless Billing", ["No", "Yes"])
+    contract  =st.selectbox("Contract",["Month-to-month","One year","Two year"])
+    payment   =st.selectbox("Payment Method",["Bank transfer (automatic)","Credit card (automatic)","Electronic check","Mailed check"])
+    paperless =st.selectbox("Paperless Billing",["No","Yes"])
 
 with col2:
     st.subheader("🌐 Services")
-    phone            =st.selectbox("Phone Service", ["No", "Yes"])
-    multiple_lines   =st.selectbox("Multiple Lines",
-                            ["No", "No phone service", "Yes"])
-    internet         =st.selectbox("Internet Service",
-                            ["DSL", "Fiber optic", "No"])
-    online_security  =st.selectbox("Online Security",
-                            ["No", "No internet service", "Yes"])
-    online_backup    =st.selectbox("Online Backup",
-                            ["No", "No internet service", "Yes"])
-    device_prot      =st.selectbox("Device Protection",
-                            ["No", "No internet service", "Yes"])
-    tech_support     =st.selectbox("Tech Support",
-                            ["No", "No internet service", "Yes"])
-    streaming_tv     =st.selectbox("Streaming TV",
-                            ["No", "No internet service", "Yes"])
-    streaming_movies =st.selectbox("Streaming Movies",
-                            ["No", "No internet service", "Yes"])
+    phone            =st.selectbox("Phone Service",["No","Yes"])
+    multiple_lines   =st.selectbox("Multiple Lines",["No","No phone service","Yes"])
+    internet         =st.selectbox("Internet Service",["DSL","Fiber optic","No"])
+    online_security  =st.selectbox("Online Security",["No","No internet service","Yes"])
+    online_backup    =st.selectbox("Online Backup",["No","No internet service","Yes"])
+    device_prot      =st.selectbox("Device Protection",["No","No internet service","Yes"])
+    tech_support     =st.selectbox("Tech Support",["No","No internet service","Yes"])
+    streaming_tv     =st.selectbox("Streaming TV",["No","No internet service","Yes"])
+    streaming_movies =st.selectbox("Streaming Movies",["No","No internet service","Yes"])
 
 with col3:
     st.subheader("👤 Demographics & Charges")
-    gender          =st.selectbox("Gender", ["Female", "Male"])
-    senior          =st.selectbox("Senior Citizen", ["No", "Yes"])
-    partner         =st.selectbox("Partner", ["No", "Yes"])
-    dependents      =st.selectbox("Dependents", ["No", "Yes"])
+    gender          =st.selectbox("Gender",["Female","Male"])
+    senior          =st.selectbox("Senior Citizen",["No","Yes"])
+    partner         =st.selectbox("Partner",["No","Yes"])
+    dependents      =st.selectbox("Dependents",["No","Yes"])
     monthly_charges =st.slider("Monthly Charges ($)", 18.0, 120.0, 65.0)
-    total_charges   =st.number_input(
-                        "Total Charges ($)",min_value=0.0,max_value=9000.0,
-                        value=float(round(monthly_charges*max(tenure,1),2)))
+    total_charges   =st.number_input("Total Charges ($)",min_value=0.0,max_value=9000.0,value=float(round(monthly_charges*max(tenure,1),2)))
 
 st.divider()
 
@@ -83,12 +68,9 @@ def get_retention_intelligence():
 
 
     if contract=="Month-to-month":
-        risk_factors.append(
-            "Month-to-month contract — these customers have a 43% churn rate "
+        risk_factors.append("Month-to-month contract — these customers have a 43% churn rate "
             "vs only 3% for 2-year contracts")
-        actions.append((
-            "🔒 Offer contract upgrade",
-            "Propose a 1-year contract with 15% monthly discount "
+        actions.append(("🔒 Offer contract upgrade", "Propose a 1-year contract with 15% monthly discount "
             "or a 2-year contract with 25% discount"))
 
 
@@ -127,9 +109,8 @@ def get_retention_intelligence():
             f"offer a loyalty gift at 12-month mark (e.g. 1 month free)"))
 
     if monthly_charges>80:
-        saving=round(monthly_charges*0.10, 2)
-        risk_factors.append(
-            f"High monthly charges (${monthly_charges:.0f}) — "
+        saving=round(monthly_charges*0.10,2)
+        risk_factors.append(f"High monthly charges (${monthly_charges:.0f}) — "
             "above-average bill increases price sensitivity and competitor appeal")
         actions.append((
             "💰 Loyalty price reduction",
