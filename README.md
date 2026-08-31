@@ -2,7 +2,7 @@
 
 > Predict which telecom customers are at risk of leaving — and get a personalised,data-driven plan to retain them.
 
-🔴 **Live Demo**: [Click here to try the app](https://customer-cpris-7044.streamlit.app/)
+🔴 **Live Demo**:[Click here to try the app](https://customer-cpris-7044.streamlit.app/)
 
 ---
 ## 🎯 Problem Statement
@@ -10,15 +10,15 @@
 Customer churn is one of the most costly problems in the telecom industry. Acquiring a new customer costs **5–7× more** than retaining an existing one. Yet most companies only act after a customer has already left.
 
 This project solves two problems in one system:
-1. **Predict** — which customers are at risk of churning (and by how much)
-2. **Retain** — give a personalised, specific action plan for each at-risk customer *before* they leave
+1. **Predict** —which customers are at risk of churning (and by how much)
+2. **Retain** —give a personalised,specific action plan for each at-risk customer *before* they leave
 
 ---
 
 ## 💡 Solution
 
 A machine learning system trained on **7,032 real Telco customer records** that:
-- Classifies each customer into Low / Medium / High churn risk
+- Classifies each customer into Low /Medium/High churn risk
 - Explains *why* that specific customer is at risk
 - Recommends personalised retention actions (contract offers, discounts, bundles, loyalty programmes)
 - Deployed as a live interactive web application
@@ -124,15 +124,14 @@ streamlit run app.py
 ### Prediction — Retention Actions
 <img width="1258" height="890" alt="Screenshot 2026-07-01 173739" src="https://github.com/user-attachments/assets/53872666-2f4c-466f-b502-69a18128fcbc" />
 
-
 ---
 
 ## 📈 Dataset
 
-- **Source**: IBM Telco Customer Churn Dataset (available on Kaggle)
-- **Records**: 7,043 customers → 7,032 after cleaning (11 rows with null TotalCharges dropped)
-- **Features**: 20 columns including demographics, services, contract, and charges
-- **Target**: Churn (Yes/No) → encoded as 1/0
+- **Source**:IBM Telco Customer Churn Dataset (available on Kaggle)
+- **Records**:7,043 customers → 7,032 after cleaning (11 rows with null TotalCharges dropped)
+- **Features**:20 columns including demographics,services,contract, and charges
+- **Target**:Churn (Yes/No)→encoded as 1/0
 
 ---
 
@@ -144,9 +143,9 @@ The training notebook (`Customer_Churn_Project.ipynb`) covers:
 2. Data cleaning (TotalCharges fix,null handling,encoding)
 3. Exploratory Data Analysis — 12 plots across demographics and services
 4. Feature preprocessing (LabelEncoder+get_dummies+StandardScaler)
-5. Model building & comparison (LR vs RF vs GB)
+5. Model building & comparison (LRvsRFvsGB)
 6. ROC curve comparison + feature importance plot
-7. Final results — confusion matrix + classification report
+7. Final results — confusion matrix+classification report
 
 ---
 ## 👨‍💻 Author
