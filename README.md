@@ -1,12 +1,10 @@
 # 📊 Customer Churn Prediction & Retention Intelligence System
 
-> Predict which telecom customers are at risk of leaving — and get a personalised, data-driven action plan to retain them in real time.
+> An end-to-end Machine Learning Web Application & REST API that predicts telecom customer churn risk in real-time and prescribes automated, data-driven retention action plans.
 
 ---
 
-## 🌟 Overview & Architecture
-
-This project is a **production-ready Machine Learning Web Server** built with Flask, Gunicorn, and a custom modern dark-themed web interface. It combines predictive analytics with business intelligence to not only detect customer churn risk but also recommend actionable retention strategies.
+## 🌟 Architecture & System Design
 
 ```
 ┌────────────────────────────────────────────────────────┐
@@ -31,21 +29,21 @@ This project is a **production-ready Machine Learning Web Server** built with Fl
 
 ## 🎯 Problem Statement
 
-Customer churn is one of the most costly challenges in the telecom and subscription industry. Acquiring a new customer costs **5–7× more** than retaining an existing one. Yet most companies only react after a customer has already canceled their service.
+Customer churn is one of the most expensive challenges in the telecommunications and subscription industry. Acquiring a new customer costs **5–7× more** than retaining an existing one. Yet most companies only react *after* a customer has already canceled their service.
 
-This system solves two critical problems:
-1. **Predict Churn Risk**: Accurately estimates each customer's probability of leaving using machine learning.
-2. **Prescribe Retention Actions**: Generates automated, tailored retention plans *before* the customer churns based on EDA data insights.
+This system solves two core problems:
+1. **Predict Churn Risk**: Accurately estimates each customer's likelihood of leaving using a trained Machine Learning model.
+2. **Prescribe Retention Actions**: Automatically generates tailored retention offers and strategies *before* the customer cancels, based on empirical exploratory data analysis (EDA) insights.
 
 ---
 
 ## 💡 Key Features
 
-- ⚡ **Real-Time Predictions**: Instant churn score calculation and risk classification (Low, Medium, High).
-- 🧠 **Retention Intelligence Engine**: Dynamic root-cause diagnosis explaining *why* the customer is at risk, paired with 3 tailored retention action items.
-- 🎨 **Modern Dark-Mode UI**: Glassmorphism aesthetic, accessible high-contrast form controls, animated progress bars, and reactive charge calculations.
-- 🔌 **REST API Ready**: Clean `POST /predict` JSON API endpoint for seamless integration into external CRM tools or enterprise dashboards.
-- 🚀 **Cloud-Native Deployment**: Production-configured with `Procfile` and `gunicorn` for 1-click deployment to **Render.com**, **Railway**, or VPS.
+- ⚡ **Real-Time Predictions**: Calculates instant churn probabilities and classifies customers into **LOW (0–30%)**, **MEDIUM (30–60%)**, and **HIGH (60–100%)** risk tiers.
+- 🧠 **Retention Intelligence Engine**: Diagnoses customer risk drivers (e.g., month-to-month contracts, fiber optic pricing sensitivity, lack of tech support) and prescribes top 3 actionable retention steps.
+- 🎨 **Modern Dark-Mode Interface**: High-contrast glassmorphism aesthetic, accessible high-contrast form controls, animated progress bars, and reactive total charges calculation.
+- 🔌 **REST API Ready**: Dedicated `POST /predict` JSON API endpoint for integration into external CRM systems, dashboards, or automated marketing workflows.
+- 🚀 **Production-Grade Deployment**: Pre-configured with `Procfile` and `Gunicorn` WSGI server for zero-downtime hosting on **Render.com**, **Railway**, or any standard cloud VPS.
 
 ---
 
@@ -55,22 +53,23 @@ Trained on **7,032 real Telco customer records** (cleaned from 7,043 rows):
 
 | Model | Accuracy | ROC-AUC | Status |
 |---|---|---|---|
-| Logistic Regression | 79.3% | 0.830 | Evaluated |
+| Logistic Regression | 79.3% | 0.830 | Evaluated Baseline |
 | **Random Forest Classifier** | **80.4%** | **0.850** | **✅ Selected for Production** |
 | Gradient Boosting | 80.1% | 0.845 | Evaluated |
 
-**Winner**: **Random Forest** achieved the highest ROC-AUC (0.850) and best generalization across demographic and service feature spaces.
+**Selected Model**: **Random Forest** achieved the highest ROC-AUC score (**0.850**) and best generalization across demographic and service feature spaces.
 
 ---
 
-## 📊 Key EDA Insights
+## 📊 Key Data Insights & Retention Rules
 
-| Discovery | Data Insight | Retention Strategy |
+| Feature / Pattern | Data Finding | Actionable Retention Rule |
 |---|---|---|
-| **Month-to-month contracts** | **43% churn rate** vs only 3% on 2-year contracts | Offer contract upgrade discounts (15–25% off) |
-| **Early tenure (< 12 mos)** | **68% of all churn** occurs in the first year | Early loyalty rewards & dedicated account management |
-| **Fiber optic subscribers** | Churn **2× more** than DSL users due to pricing pressure | Offer free security & device protection bundles |
-| **Electronic check payments** | Highest churn rate among all payment methods | Incentivize auto-pay (5% bill credit) |
+| **Month-to-Month Contracts** | **43% churn rate** vs only 3% for 2-year contracts | Offer contract upgrade with 15–25% discount |
+| **Early Tenure (< 12 mos)** | **68% of all churn** occurs in the first year | Assign dedicated account manager + milestone loyalty gift |
+| **Fiber Optic Internet** | Churns **2× more** than DSL (cost & competition) | Bundle free security / device protection for 3 months |
+| **Electronic Check Payments** | Highest churn rate among all payment methods | Provide 5% recurring discount for switching to auto-pay |
+| **Seniors without Tech Support** | High risk of passive churn from service friction | Provide complimentary tech support + priority customer line |
 
 ---
 
@@ -78,11 +77,11 @@ Trained on **7,032 real Telco customer records** (cleaned from 7,043 rows):
 
 | Layer | Technologies |
 |---|---|
-| **Backend & Server** | Python 3, Flask, Gunicorn WSGI Server |
+| **Backend & Server** | Python 3, Flask, Gunicorn (WSGI) |
 | **Machine Learning** | Scikit-learn (Random Forest, StandardScaler), Joblib, Pandas, NumPy |
-| **Frontend UI** | HTML5, Vanilla CSS3 (Glassmorphism, High-Contrast Dark Mode), JavaScript (Fetch API) |
-| **Typography & Icons** | Google Fonts (Inter), Modern Emoji Badges |
-| **Deployment & Hosting** | Render.com (Web Service), Railway, Git |
+| **Frontend UI** | HTML5, Vanilla CSS3 (Custom Glassmorphism, CSS Variables), JavaScript (Fetch API) |
+| **Typography & Styling** | Google Fonts (Inter), Modern Status Badges |
+| **Deployment & DevOps** | Render.com, Git, Procfile |
 
 ---
 
@@ -90,22 +89,84 @@ Trained on **7,032 real Telco customer records** (cleaned from 7,043 rows):
 
 ```
 Customer-Churn-Prediction-Retention-Intelligence-System/
-├── server.py                   # Flask server (API endpoints & model inference)
+├── server.py                   # Production Flask application & REST API
 ├── templates/
-│   └── index.html              # Modern dark-themed frontend UI
+│   └── index.html              # Frontend user interface template
 ├── static/
-│   └── style.css               # Glassmorphism styling, responsive layouts & variables
-├── columns.json                # Preprocessed feature column schema
-├── rf_model.pkl                # Trained Random Forest model (production)
-├── scaler.pkl                  # Fitted StandardScaler object
-├── lr_model.pkl                # Trained Logistic Regression baseline
-├── Customer_Churn_Project.ipynb# Full EDA, preprocessing, training & validation notebook
-├── Customer-Churn.csv          # Local raw dataset
-├── requirements.txt            # Python dependencies (Flask, Gunicorn, ML libs)
-├── Procfile                    # Web process command for Render/Railway
-├── app.py                      # Original Streamlit app (kept for legacy reference)
-└── README.md                   # Documentation
+│   └── style.css               # Modern dark-theme glassmorphism stylesheet
+├── columns.json                # Expected feature column schema for inference
+├── rf_model.pkl                # Production Random Forest ML model artifact
+├── scaler.pkl                  # Fitted StandardScaler artifact
+├── lr_model.pkl                # Baseline Logistic Regression model
+├── Customer_Churn_Project.ipynb# EDA, feature engineering & model training notebook
+├── Customer-Churn.csv          # Telco customer dataset
+├── requirements.txt            # Python dependencies (Flask, Gunicorn, ML libraries)
+├── Procfile                    # Deployment process configuration for Render/Railway
+├── app.py                      # Legacy Streamlit app (kept for historical reference)
+└── README.md                   # Project documentation
 ```
+
+---
+
+## 🌐 Step-by-Step Cloud Deployment on Render.com
+
+Follow these steps to deploy your live web application on **Render.com** (Free Tier):
+
+### Step 1: Ensure Your Code is Pushed to GitHub
+Make sure all your latest files (`server.py`, `Procfile`, `requirements.txt`, `templates/`, `static/`, `.pkl` models) are committed and pushed to your GitHub repository:
+```bash
+git add .
+git commit -m "chore: prepare repository for Render deployment"
+git push origin main
+```
+
+---
+
+### Step 2: Sign in to Render
+1. Visit **[https://render.com](https://render.com)**.
+2. Click **Get Started** or **Sign In** and authenticate with your **GitHub account** (this makes importing repositories seamless).
+
+---
+
+### Step 3: Create a New Web Service
+1. In the Render Dashboard, click the **New +** button in the top navigation bar.
+2. Select **Web Service**.
+3. Under **Connect a repository**, find and select your repository:
+   `saicharan-r02/Customer-Churn-Prediction-Retention-Intelligence-System` (or your repository name).
+4. Click **Connect**.
+
+---
+
+### Step 4: Configure Web Service Settings
+Fill in the deployment configuration with the following values:
+
+| Field | Configuration Value |
+|---|---|
+| **Name** | `customer-churn-prediction` *(or any unique name)* |
+| **Language / Runtime** | `Python 3` |
+| **Branch** | `main` |
+| **Region** | Select the region closest to you (e.g. *Singapore*, *Frankfurt*, *Oregon*) |
+| **Root Directory** | *(Leave blank)* |
+| **Build Command** | `pip install -r requirements.txt` |
+| **Start Command** | `gunicorn server:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120` |
+| **Instance Type** | **Free** ($0 / month) |
+
+---
+
+### Step 5: Deploy the Service
+1. Click **Deploy Web Service** at the bottom of the page.
+2. Render will automatically:
+   - Clone your repository.
+   - Install dependencies from `requirements.txt`.
+   - Start the Gunicorn server using `server.py`.
+3. Once the build logs show `[START] Server running` and the status badge changes to **Live**, your public web address will be visible at the top:
+   ```
+   https://customer-churn-prediction-xxxx.onrender.com
+   ```
+4. Open the link in your browser to interact with the live application!
+
+> [!NOTE]
+> On Render's Free tier, instances spin down after 15 minutes of inactivity. When a new request arrives, it may take 20–30 seconds for the initial cold start.
 
 ---
 
@@ -113,11 +174,11 @@ Customer-Churn-Prediction-Retention-Intelligence-System/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/saicharan-r02/Customer-Churn-System.git
-cd Customer-Churn-System
+git clone https://github.com/saicharan-r02/Customer-Churn-Prediction-Retention-Intelligence-System.git
+cd Customer-Churn-Prediction-Retention-Intelligence-System
 ```
 
-### 2. Install Dependencies
+### 2. Install Required Dependencies
 ```bash
 pip install -r requirements.txt
 ```
@@ -127,58 +188,17 @@ pip install -r requirements.txt
 python server.py
 ```
 
-### 4. Open in Browser
-Visit **`http://localhost:5000`** in your browser.
-
----
-
-## 🌐 Step-by-Step Cloud Deployment on Render.com
-
-[Render](https://render.com) provides free and reliable cloud hosting for Python web applications. Follow these steps:
-
-### Step 1: Push Code to GitHub
-Ensure all your latest changes are pushed to your GitHub repository:
-```bash
-git add .
-git commit -m "chore: prepare for Render deployment"
-git push origin main
-```
-
-### Step 2: Create a Render Account
-1. Go to [https://render.com](https://render.com) and click **Sign Up** (Sign in with your GitHub account for easiest setup).
-
-### Step 3: Create a New Web Service
-1. In your Render Dashboard, click **New +** → select **Web Service**.
-2. Choose **Build and deploy from a Git repository**.
-3. Connect your repository: `Customer-Churn-System` (or search for your repository name).
-
-### Step 4: Configure Service Settings
-Fill in the following configuration fields:
-
-| Field | Value |
-|---|---|
-| **Name** | `customer-churn-intelligence` *(or any unique name)* |
-| **Region** | Select the closest region (e.g., *Singapore*, *Frankfurt*, *Oregon*) |
-| **Branch** | `main` |
-| **Root Directory** | *(Leave empty)* |
-| **Runtime** | `Python 3` |
-| **Build Command** | `pip install -r requirements.txt` |
-| **Start Command** | `gunicorn server:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120` |
-| **Instance Type** | **Free** |
-
-### Step 5: Deploy
-1. Click **Create Web Service** at the bottom of the page.
-2. Render will automatically clone your repository, install dependencies from `requirements.txt`, load the model, and start the Gunicorn server.
-3. Once the build finishes and status shows **Live**, your public URL will appear at the top (e.g., `https://customer-churn-intelligence.onrender.com`).
+### 4. Open in Your Browser
+Navigate to **`http://localhost:5000`** in your browser.
 
 ---
 
 ## 📡 REST API Documentation
 
-You can integrate predictions directly into other applications using the `/predict` endpoint:
+You can query the machine learning model programmatically via HTTP requests:
 
 ### Endpoint: `POST /predict`
-- **Content-Type**: `application/json`
+- **Headers**: `Content-Type: application/json`
 
 #### Request Payload Example:
 ```json
@@ -205,7 +225,7 @@ You can integrate predictions directly into other applications using the `/predi
 }
 ```
 
-#### Response Example (HTTP 200):
+#### JSON Response (HTTP 200):
 ```json
 {
   "probability": 56.0,
@@ -236,4 +256,4 @@ You can integrate predictions directly into other applications using the `/predi
 
 ## 👨‍💻 Author
 
-Built as an end-to-end production Machine Learning & Business Intelligence system.
+Developed by **Sai Charan** — End-to-end Machine Learning, Backend Engineering & Retention Intelligence System.
