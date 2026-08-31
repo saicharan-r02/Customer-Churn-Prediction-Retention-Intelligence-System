@@ -2,6 +2,8 @@
 
 > An end-to-end Machine Learning Web Application & REST API that predicts telecom customer churn risk in real-time and prescribes automated, data-driven retention action plans.
 
+🔴 **Live Demo**: [Click here to try the Live App](https://customer-churn-prediction-retention-sh3p.onrender.com/)
+
 ---
 
 ## 🌟 Architecture & System Design
