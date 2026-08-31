@@ -1,152 +1,239 @@
 # 📊 Customer Churn Prediction & Retention Intelligence System
 
-> Predict which telecom customers are at risk of leaving — and get a personalised,data-driven plan to retain them.
-
-🔴 **Live Demo**:[Click here to try the app](https://customer-cpris-7044.streamlit.app/)
+> Predict which telecom customers are at risk of leaving — and get a personalised, data-driven action plan to retain them in real time.
 
 ---
+
+## 🌟 Overview & Architecture
+
+This project is a **production-ready Machine Learning Web Server** built with Flask, Gunicorn, and a custom modern dark-themed web interface. It combines predictive analytics with business intelligence to not only detect customer churn risk but also recommend actionable retention strategies.
+
+```
+┌────────────────────────────────────────────────────────┐
+│               Modern Dark-Themed Web UI                │
+│    (HTML5 + Vanilla CSS Glassmorphism + Responsive)    │
+└───────────────────────────┬────────────────────────────┘
+                            │ JSON POST /predict
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│                   Flask REST Server                    │
+│             (Production WSGI with Gunicorn)            │
+├───────────────────────────┬────────────────────────────┤
+│   ML Inference Engine     │  Retention Intelligence    │
+│  - StandardScaler         │  - Contract Upgrades       │
+│  - Random Forest (80.4%)  │  - Service Bundles         │
+│  - Churn Probability &    │  - Discount Offers         │
+│    Risk Level (Low/Med/Hi)│  - Senior Support Plans    │
+└───────────────────────────┴────────────────────────────┘
+```
+
+---
+
 ## 🎯 Problem Statement
 
-Customer churn is one of the most costly problems in the telecom industry. Acquiring a new customer costs **5–7× more** than retaining an existing one. Yet most companies only act after a customer has already left.
+Customer churn is one of the most costly challenges in the telecom and subscription industry. Acquiring a new customer costs **5–7× more** than retaining an existing one. Yet most companies only react after a customer has already canceled their service.
 
-This project solves two problems in one system:
-1. **Predict** —which customers are at risk of churning (and by how much)
-2. **Retain** —give a personalised,specific action plan for each at-risk customer *before* they leave
-
----
-
-## 💡 Solution
-
-A machine learning system trained on **7,032 real Telco customer records** that:
-- Classifies each customer into Low /Medium/High churn risk
-- Explains *why* that specific customer is at risk
-- Recommends personalised retention actions (contract offers, discounts, bundles, loyalty programmes)
-- Deployed as a live interactive web application
+This system solves two critical problems:
+1. **Predict Churn Risk**: Accurately estimates each customer's probability of leaving using machine learning.
+2. **Prescribe Retention Actions**: Generates automated, tailored retention plans *before* the customer churns based on EDA data insights.
 
 ---
 
-## 🏆 Model Results
+## 💡 Key Features
 
-| Model | Accuracy | ROC-AUC |
+- ⚡ **Real-Time Predictions**: Instant churn score calculation and risk classification (Low, Medium, High).
+- 🧠 **Retention Intelligence Engine**: Dynamic root-cause diagnosis explaining *why* the customer is at risk, paired with 3 tailored retention action items.
+- 🎨 **Modern Dark-Mode UI**: Glassmorphism aesthetic, accessible high-contrast form controls, animated progress bars, and reactive charge calculations.
+- 🔌 **REST API Ready**: Clean `POST /predict` JSON API endpoint for seamless integration into external CRM tools or enterprise dashboards.
+- 🚀 **Cloud-Native Deployment**: Production-configured with `Procfile` and `gunicorn` for 1-click deployment to **Render.com**, **Railway**, or VPS.
+
+---
+
+## 🏆 Model Benchmark & Performance
+
+Trained on **7,032 real Telco customer records** (cleaned from 7,043 rows):
+
+| Model | Accuracy | ROC-AUC | Status |
+|---|---|---|---|
+| Logistic Regression | 79.3% | 0.830 | Evaluated |
+| **Random Forest Classifier** | **80.4%** | **0.850** | **✅ Selected for Production** |
+| Gradient Boosting | 80.1% | 0.845 | Evaluated |
+
+**Winner**: **Random Forest** achieved the highest ROC-AUC (0.850) and best generalization across demographic and service feature spaces.
+
+---
+
+## 📊 Key EDA Insights
+
+| Discovery | Data Insight | Retention Strategy |
 |---|---|---|
-| Logistic Regression | 79.3% | 0.830 |
-| **Random Forest** ✅ | **80.4%** | **0.850** |
-| Gradient Boosting | 80.1% | 0.845 |
-
-**Winner: Random Forest** — best accuracy and AUC, selected for deployment.
-
----
-
-## 📊 Key EDA Insights (from 7,032 customer records)
-
-| Finding | Data |
-|---|---|
-| Month-to-month contract churn rate | **43%** vs 3% for 2-year contracts |
-| Customers who churn in first 12 months | **68%** — critical early retention window |
-| Fiber optic vs DSL churn rate | Fiber churns **2× more** than DSL |
-| Highest-risk payment method | **Electronic check** — highest churn of all methods |
-
----
-
-## 🧠 Retention Intelligence Logic
-
-The system goes beyond a simple probability score. For each customer it analyses:
-
-- **Contract type** → offers specific upgrade discount (15% for 1-yr, 25% for 2-yr)
-- **Internet service** → recommends free security/tech bundle for fiber optic users
-- **Payment method** → suggests auto-pay switch with 5% monthly discount
-- **Tenure** → triggers early loyalty programme for customers under 12 months
-- **Monthly charges** → calculates exact saving and proposes price reduction
-- **Senior citizens** → recommends dedicated support plan
-- **Missing services** → offers targeted streaming/security trial bundles
+| **Month-to-month contracts** | **43% churn rate** vs only 3% on 2-year contracts | Offer contract upgrade discounts (15–25% off) |
+| **Early tenure (< 12 mos)** | **68% of all churn** occurs in the first year | Early loyalty rewards & dedicated account management |
+| **Fiber optic subscribers** | Churn **2× more** than DSL users due to pricing pressure | Offer free security & device protection bundles |
+| **Electronic check payments** | Highest churn rate among all payment methods | Incentivize auto-pay (5% bill credit) |
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Category | Tools |
+| Layer | Technologies |
 |---|---|
-| Language | Python 3 |
-| Data Processing | Pandas, NumPy |
-| Machine Learning | Scikit-learn (Random Forest, Logistic Regression, Gradient Boosting) |
-| Visualisation | Matplotlib, Seaborn |
-| Web App | Streamlit |
-| Model Persistence | Joblib |
-| Deployment | Streamlit Cloud |
+| **Backend & Server** | Python 3, Flask, Gunicorn WSGI Server |
+| **Machine Learning** | Scikit-learn (Random Forest, StandardScaler), Joblib, Pandas, NumPy |
+| **Frontend UI** | HTML5, Vanilla CSS3 (Glassmorphism, High-Contrast Dark Mode), JavaScript (Fetch API) |
+| **Typography & Icons** | Google Fonts (Inter), Modern Emoji Badges |
+| **Deployment & Hosting** | Render.com (Web Service), Railway, Git |
 
 ---
 
 ## 📁 Project Structure
 
 ```
-Customer-Churn-Prediction-Reten.../
-├── .gitignore
-├── app.py
-├── columns.json
-├── Customer_Churn_Project.ipynb
-├── Customer-Churn.csv        ← stays local (gitignored)
-├── lr_model.pkl
-├── README.md                  
-├── requirements.txt
-├── rf_model.pkl
-└── scaler.pkl
+Customer-Churn-Prediction-Retention-Intelligence-System/
+├── server.py                   # Flask server (API endpoints & model inference)
+├── templates/
+│   └── index.html              # Modern dark-themed frontend UI
+├── static/
+│   └── style.css               # Glassmorphism styling, responsive layouts & variables
+├── columns.json                # Preprocessed feature column schema
+├── rf_model.pkl                # Trained Random Forest model (production)
+├── scaler.pkl                  # Fitted StandardScaler object
+├── lr_model.pkl                # Trained Logistic Regression baseline
+├── Customer_Churn_Project.ipynb# Full EDA, preprocessing, training & validation notebook
+├── Customer-Churn.csv          # Local raw dataset
+├── requirements.txt            # Python dependencies (Flask, Gunicorn, ML libs)
+├── Procfile                    # Web process command for Render/Railway
+├── app.py                      # Original Streamlit app (kept for legacy reference)
+└── README.md                   # Documentation
 ```
 
 ---
 
 ## 🚀 How to Run Locally
 
+### 1. Clone the Repository
 ```bash
-# 1. Clone the repository
-git clone https://github.com/saicharan-r02/Customer-Churn-Prediction-Retention-Intelligence-System.git
-cd Customer-Churn-Prediction-Retention-Intelligence-System
+git clone https://github.com/saicharan-r02/Customer-Churn-System.git
+cd Customer-Churn-System
+```
 
-# 2. Install dependencies
+### 2. Install Dependencies
+```bash
 pip install -r requirements.txt
+```
 
-# 3. Run the app
-streamlit run app.py
+### 3. Start the Flask Server
+```bash
+python server.py
+```
+
+### 4. Open in Browser
+Visit **`http://localhost:5000`** in your browser.
+
+---
+
+## 🌐 Step-by-Step Cloud Deployment on Render.com
+
+[Render](https://render.com) provides free and reliable cloud hosting for Python web applications. Follow these steps:
+
+### Step 1: Push Code to GitHub
+Ensure all your latest changes are pushed to your GitHub repository:
+```bash
+git add .
+git commit -m "chore: prepare for Render deployment"
+git push origin main
+```
+
+### Step 2: Create a Render Account
+1. Go to [https://render.com](https://render.com) and click **Sign Up** (Sign in with your GitHub account for easiest setup).
+
+### Step 3: Create a New Web Service
+1. In your Render Dashboard, click **New +** → select **Web Service**.
+2. Choose **Build and deploy from a Git repository**.
+3. Connect your repository: `Customer-Churn-System` (or search for your repository name).
+
+### Step 4: Configure Service Settings
+Fill in the following configuration fields:
+
+| Field | Value |
+|---|---|
+| **Name** | `customer-churn-intelligence` *(or any unique name)* |
+| **Region** | Select the closest region (e.g., *Singapore*, *Frankfurt*, *Oregon*) |
+| **Branch** | `main` |
+| **Root Directory** | *(Leave empty)* |
+| **Runtime** | `Python 3` |
+| **Build Command** | `pip install -r requirements.txt` |
+| **Start Command** | `gunicorn server:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120` |
+| **Instance Type** | **Free** |
+
+### Step 5: Deploy
+1. Click **Create Web Service** at the bottom of the page.
+2. Render will automatically clone your repository, install dependencies from `requirements.txt`, load the model, and start the Gunicorn server.
+3. Once the build finishes and status shows **Live**, your public URL will appear at the top (e.g., `https://customer-churn-intelligence.onrender.com`).
+
+---
+
+## 📡 REST API Documentation
+
+You can integrate predictions directly into other applications using the `/predict` endpoint:
+
+### Endpoint: `POST /predict`
+- **Content-Type**: `application/json`
+
+#### Request Payload Example:
+```json
+{
+  "tenure": 12,
+  "monthly_charges": 75.50,
+  "total_charges": 906.00,
+  "gender": "Female",
+  "senior": "No",
+  "partner": "Yes",
+  "dependents": "No",
+  "phone": "Yes",
+  "multiple_lines": "No",
+  "internet": "Fiber optic",
+  "online_security": "No",
+  "online_backup": "No",
+  "device_protection": "Yes",
+  "tech_support": "No",
+  "streaming_tv": "Yes",
+  "streaming_movies": "No",
+  "paperless": "Yes",
+  "contract": "Month-to-month",
+  "payment": "Electronic check"
+}
+```
+
+#### Response Example (HTTP 200):
+```json
+{
+  "probability": 56.0,
+  "risk_level": "MEDIUM",
+  "risk_factors": [
+    "Month-to-month contract — these customers have a 43% churn rate vs only 3% for 2-year contracts",
+    "Fiber optic subscriber — churns 2× more than DSL users (likely due to higher cost and more competition)",
+    "Electronic check payment — highest churn rate among all payment methods, linked to manual payment friction"
+  ],
+  "actions": [
+    {
+      "title": "🔒 Offer contract upgrade",
+      "desc": "Propose a 1-year contract with 15% monthly discount or a 2-year contract with 25% discount"
+    },
+    {
+      "title": "🛡️ Free security bundle",
+      "desc": "Add Online Security + Device Protection free for 3 months — increases service stickiness"
+    },
+    {
+      "title": "💳 Auto-pay discount",
+      "desc": "Offer a 5% monthly bill discount for switching to bank transfer or credit card auto-pay"
+    }
+  ]
+}
 ```
 
 ---
 
-## 📸 Screenshots
-
-### Home — Input Form
-<img width="1915" height="962" alt="Screenshot 2026-07-01 173534" src="https://github.com/user-attachments/assets/980c8e1f-50a1-4635-af10-38ad9996897d" />
-<img width="1918" height="975" alt="Screenshot 2026-07-01 173607" src="https://github.com/user-attachments/assets/5d0f70b8-f0a8-4dc2-8759-cbeb6f1596fd" />
-
-
-### Prediction — High Risk Customer
-<img width="650" height="841" alt="Screenshot 2026-07-01 173624" src="https://github.com/user-attachments/assets/12275b78-d761-43e1-a5e7-f23ebf3063b6" />
-
-
-### Prediction — Retention Actions
-<img width="1258" height="890" alt="Screenshot 2026-07-01 173739" src="https://github.com/user-attachments/assets/53872666-2f4c-466f-b502-69a18128fcbc" />
-
----
-
-## 📈 Dataset
-
-- **Source**:IBM Telco Customer Churn Dataset (available on Kaggle)
-- **Records**:7,043 customers → 7,032 after cleaning (11 rows with null TotalCharges dropped)
-- **Features**:20 columns including demographics,services,contract, and charges
-- **Target**:Churn (Yes/No)→encoded as 1/0
-
----
-
-## 🔍 Notebook Sections
-
-The training notebook (`Customer_Churn_Project.ipynb`) covers:
-
-1. Data loading & initial exploration
-2. Data cleaning (TotalCharges fix,null handling,encoding)
-3. Exploratory Data Analysis — 12 plots across demographics and services
-4. Feature preprocessing (LabelEncoder+get_dummies+StandardScaler)
-5. Model building & comparison (LRvsRFvsGB)
-6. ROC curve comparison + feature importance plot
-7. Final results — confusion matrix+classification report
-
----
 ## 👨‍💻 Author
-Built as an end-to-end machine learning project demonstrating data cleaning, EDA, model selection, and production deployment with a business-focused retention intelligence layer.
+
+Built as an end-to-end production Machine Learning & Business Intelligence system.
