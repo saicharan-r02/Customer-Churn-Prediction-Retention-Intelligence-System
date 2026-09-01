@@ -16,7 +16,19 @@ import numpy as np
 import pandas as pd
 from flask import Flask, render_template, request, jsonify
 
+# Database integration
+from database import (
+    init_db,
+    log_prediction,
+    get_recent_predictions,
+    get_analytics_summary,
+    update_retention_status
+)
+
 app=Flask(__name__)
+
+# Initialize database
+init_db()
 
 #Load models once at startup 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -237,15 +249,83 @@ def predict():
         }
         risk_factors,actions=get_retention_intelligence(ri_data)
 
+        # Persist prediction to SQLite database
+        prob_pct = round(prob*100, 1)
+        prediction_id = None
+        try:
+            prediction_id = log_prediction(
+                customer_data=data,
+                churn_prob=prob_pct,
+                risk_level=risk_level,
+                risk_factors=risk_factors,
+                recommended_actions=actions
+            )
+        except Exception as db_err:
+            print(f"[WARN] Database logging failed: {db_err}")
+
         return jsonify({
-            "probability":round(prob*100,1),
-            "risk_level":risk_level,
-            "risk_factors":risk_factors,
-            "actions":actions,
+            "prediction_id": prediction_id,
+            "probability": prob_pct,
+            "risk_level": risk_level,
+            "risk_factors": risk_factors,
+            "actions": actions,
         })
 
     except Exception as e:
         return jsonify({"error":str(e)}),500
+
+
+@app.route("/api/history", methods=["GET"])
+def get_history():
+    """Returns recent churn prediction audit trail and high-level analytics summary."""
+    try:
+        limit = int(request.args.get("limit", 20))
+        history = get_recent_predictions(limit=limit)
+        analytics = get_analytics_summary()
+        return jsonify({
+            "status": "success",
+            "analytics": analytics,
+            "history": history
+        })
+    except Exception as e:
+        return jsonify({"status": "error", "error": str(e)}), 500
+
+
+@app.route("/api/analytics", methods=["GET"])
+def get_analytics():
+    """Returns CRM aggregate churn and retention metrics."""
+    try:
+        analytics = get_analytics_summary()
+        return jsonify({"status": "success", "data": analytics})
+    except Exception as e:
+        return jsonify({"status": "error", "error": str(e)}), 500
+
+
+@app.route("/api/retention/feedback", methods=["POST"])
+def update_feedback():
+    """Updates retention campaign outcome for a specific prediction."""
+    try:
+        payload = request.get_json(force=True)
+        pred_id = payload.get("prediction_id")
+        status = payload.get("status", "ACCEPTED")  # PENDING, ACCEPTED, DECLINED, CHURNED
+        action_taken = payload.get("action_taken")
+        notes = payload.get("notes")
+
+        if not pred_id:
+            return jsonify({"status": "error", "error": "prediction_id is required"}), 400
+
+        success = update_retention_status(
+            prediction_id=int(pred_id),
+            status=status,
+            action_taken=action_taken,
+            notes=notes
+        )
+        if success:
+            return jsonify({"status": "success", "message": f"Updated prediction {pred_id} to {status}"})
+        else:
+            return jsonify({"status": "error", "error": "Record not found"}), 404
+    except Exception as e:
+        return jsonify({"status": "error", "error": str(e)}), 500
 
 
 if __name__=="__main__":
