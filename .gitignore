@@ -2,6 +2,11 @@
 Customer-Churn.csv
 *.csv
 
+# Databases & SQLite
+*.db
+*.sqlite
+*.sqlite3
+
 # Python
 __pycache__/
 *.py[cod]
