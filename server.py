@@ -1,36 +1,19 @@
-"""
-Flask server for Customer Churn Prediction & Retention Intelligence System
-Replaces the Streamlit app with a real deployable web server.
-"""
-
 import sys
 import os
-
-# Ensure UTF-8 output on Windows
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
-
 import json
 import joblib
 import numpy as np
 import pandas as pd
-from flask import Flask, render_template, request, jsonify
+from flask import Flask,render_template,request,jsonify
 
-# Database integration
-from database import (
-    init_db,
-    log_prediction,
-    get_recent_predictions,
-    get_analytics_summary,
-    update_retention_status
-)
+from database import init_db,log_prediction,get_recent_predictions,get_analytics_summary,update_retention_status
 
 app=Flask(__name__)
 
-# Initialize database
 init_db()
 
-#Load models once at startup 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 model=joblib.load(os.path.join(BASE_DIR,"rf_model.pkl"))
@@ -41,8 +24,6 @@ with open(os.path.join(BASE_DIR,"columns.json")) as f:
 
 print("[OK] Models loaded successfully.")
 
-
-#Retention intelligence logic (ported from app.py) 
 def get_retention_intelligence(data: dict) -> tuple:
     contract=data["contract"]
     internet=data["internet"]
@@ -160,8 +141,6 @@ def get_retention_intelligence(data: dict) -> tuple:
 
     return risk_factors[:3],actions[:3]
 
-
-#routes
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -172,7 +151,6 @@ def predict():
     try:
         data=request.get_json(force=True)
 
-        #Map 3-value categorical columns
         le_3val={
             "MultipleLines":{"No":0,"No phone service":1,"Yes":2},
             "OnlineSecurity":{"No":0,"No internet service":1,"Yes":2},
@@ -249,7 +227,6 @@ def predict():
         }
         risk_factors,actions=get_retention_intelligence(ri_data)
 
-        # Persist prediction to SQLite database
         prob_pct = round(prob*100, 1)
         prediction_id = None
         try:
@@ -307,7 +284,7 @@ def update_feedback():
     try:
         payload = request.get_json(force=True)
         pred_id = payload.get("prediction_id")
-        status = payload.get("status", "ACCEPTED")  # PENDING, ACCEPTED, DECLINED, CHURNED
+        status = payload.get("status", "ACCEPTED")
         action_taken = payload.get("action_taken")
         notes = payload.get("notes")
 
