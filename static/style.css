@@ -1,9 +1,3 @@
-/* ═══════════════════════════════════════════════════════════════════════════
-   Customer Churn Prediction — Premium Dark Theme v2
-   Fixes: select option visibility, improved brightness & contrast
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* ── Reset & base ─────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -60,7 +54,7 @@ body {
   background-size: 40px 40px;
 }
 
-/* ── Hero ─────────────────────────────────────────────────────────────────── */
+/* Hero */
 .hero {
   position: relative;
   overflow: hidden;
@@ -129,14 +123,14 @@ body {
   line-height: 1.7;
 }
 
-/* ── Main container ───────────────────────────────────────────────────────── */
+/* Main container */
 main {
   max-width: 1220px;
   margin: 0 auto;
   padding: 44px 20px 64px;
 }
 
-/* ── Form grid ────────────────────────────────────────────────────────────── */
+/* Form grid */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -144,7 +138,7 @@ main {
   margin-bottom: 32px;
 }
 
-/* ── Glass cards ──────────────────────────────────────────────────────────── */
+/* Glass cards */
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -184,7 +178,7 @@ main {
 
 .icon { font-size: 1.1rem; }
 
-/* ── Fields ───────────────────────────────────────────────────────────────── */
+/*  Fields */
 .field { margin-bottom: 16px; }
 .field:last-child { margin-bottom: 0; }
 
@@ -206,7 +200,7 @@ label {
   text-transform: none;
 }
 
-/* ── Range slider ─────────────────────────────────────────────────────────── */
+/* Range slider */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -267,11 +261,6 @@ input[type="range"]::-moz-range-track {
   padding: 0 2px;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   SELECT — THE MOST IMPORTANT FIX
-   Native <option> elements can only be styled with background/color.
-   We set explicit dark colors so they are always visible on all OS/browsers.
-   ═══════════════════════════════════════════════════════════════════════════ */
 .select-wrap { position: relative; }
 
 .select-wrap::after {
@@ -288,12 +277,10 @@ input[type="range"]::-moz-range-track {
 select {
   width: 100%;
   padding: 10px 38px 10px 14px;
-  /* Solid dark background — critical for option visibility */
   background-color: #1c2540;
   background-image: none;
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: var(--radius-sm);
-  /* Bright text so it's always readable */
   color: #e2e8ff;
   font-family: inherit;
   font-size: 0.9rem;
@@ -306,7 +293,6 @@ select {
   transition: border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
 }
 
-/* Option elements — explicitly dark so they're always readable */
 select option {
   background-color: #1c2540;
   color: #e2e8ff;
@@ -332,7 +318,7 @@ select:focus {
   color: #ffffff;
 }
 
-/* ── Number input ─────────────────────────────────────────────────────────── */
+/* Number input */
 .text-input {
   width: 100%;
   padding: 10px 14px;
@@ -354,11 +340,10 @@ select:focus {
   color: #ffffff;
 }
 
-/* Fix number input arrows in dark mode */
 .text-input::-webkit-outer-spin-button,
 .text-input::-webkit-inner-spin-button { filter: invert(0.7); }
 
-/* ── Submit button ────────────────────────────────────────────────────────── */
+/* Submit button */
 .submit-wrap { text-align: center; padding: 8px 0; }
 
 .predict-btn {
@@ -411,10 +396,10 @@ select:focus {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Divider ──────────────────────────────────────────────────────────────── */
+/* Divider */
 .results { margin-top: 48px; }
 
-/* ── Results animate in ───────────────────────────────────────────────────── */
+/* Results animate*/
 .results:not(.hidden) {
   animation: fadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
@@ -426,7 +411,7 @@ select:focus {
 
 .hidden { display: none !important; }
 
-/* ── Results grid ─────────────────────────────────────────────────────────── */
+/* Results grid  */
 .results-grid {
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -435,7 +420,7 @@ select:focus {
 
 @media (max-width: 860px) { .results-grid { grid-template-columns: 1fr; } }
 
-/* ── Result cards ─────────────────────────────────────────────────────────── */
+/* Result cards */
 .result-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -611,7 +596,6 @@ select:focus {
   margin: 0;
 }
 
-/* ── Error banner ─────────────────────────────────────────────────────────── */
 .error-banner {
   margin-top: 20px;
   padding: 16px 20px;
@@ -623,7 +607,6 @@ select:focus {
   font-weight: 500;
 }
 
-/* ── Footer ───────────────────────────────────────────────────────────────── */
 footer {
   text-align: center;
   padding: 32px 20px;
@@ -633,13 +616,12 @@ footer {
   background: rgba(0,0,0,0.2);
 }
 
-/* ── Scrollbar ────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-page); }
 ::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.4); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-/* ── Responsive ───────────────────────────────────────────────────────────── */
+/* Responsive */
 @media (max-width: 640px) {
   .form-grid { grid-template-columns: 1fr; }
   .predict-btn { min-width: 100%; }
