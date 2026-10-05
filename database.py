@@ -1,96 +1,72 @@
-"""
-Database module for Customer Churn Prediction & Retention Intelligence System.
-Uses SQLite and SQLAlchemy for enterprise CRM audit logging, prediction history, and retention outcome tracking.
-"""
-
 import os
 from datetime import datetime
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Dict,Any,List,Optional,Tuple
+from sqlalchemy import create_engine,Column,Integer,Float,String,Boolean,DateTime,JSON,ForeignKey,func
+from sqlalchemy.orm import declarative_base,sessionmaker,relationship,scoped_session
 
-from sqlalchemy import (
-    create_engine, Column, Integer, Float, String, Boolean, DateTime, JSON, ForeignKey, func
-)
-from sqlalchemy.orm import declarative_base, sessionmaker, relationship, scoped_session
+BASE_DIR=os.path.dirname(os.path.abspath(__file__))
+DB_PATH=os.path.join(BASE_DIR,"churn_intelligence.db")
+DATABASE_URI=f"sqlite:///{DB_PATH}"
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "churn_intelligence.db")
-DATABASE_URI = f"sqlite:///{DB_PATH}"
-
-engine = create_engine(DATABASE_URI, connect_args={"check_same_thread": False})
-SessionLocal = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
-Base = declarative_base()
-
+engine=create_engine(DATABASE_URI,connect_args={"check_same_thread": False})
+SessionLocal=scoped_session(sessionmaker(autocommit=False,autoflush=False,bind=engine))
+Base=declarative_base()
 
 class Customer(Base):
-    """Stores customer profile and contract specifications."""
-    __tablename__ = "customers"
+    __tablename__="customers"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    customer_code = Column(String(50), index=True, nullable=True)
-    gender = Column(String(10), default="Unknown")
-    senior_citizen = Column(Boolean, default=False)
-    partner = Column(Boolean, default=False)
-    dependents = Column(Boolean, default=False)
-    tenure = Column(Integer, default=0)
-    contract = Column(String(50), default="Month-to-month")
-    payment_method = Column(String(50), default="Electronic check")
-    monthly_charges = Column(Float, default=0.0)
-    total_charges = Column(Float, default=0.0)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    id=Column(Integer,primary_key=True,autoincrement=True)
+    customer_code=Column(String(50),index=True,nullable=True)
+    gender=Column(String(10),default="Unknown")
+    senior_citizen=Column(Boolean,default=False)
+    partner=Column(Boolean,default=False)
+    dependents=Column(Boolean,default=False)
+    tenure=Column(Integer,default=0)
+    contract=Column(String(50),default="Month-to-month")
+    payment_method=Column(String(50),default="Electronic check")
+    monthly_charges=Column(Float,default=0.0)
+    total_charges=Column(Float,default=0.0)
+    created_at=Column(DateTime,default=datetime.utcnow)
 
-    # Relationships
-    predictions = relationship("ChurnPrediction", back_populates="customer", cascade="all, delete-orphan")
+    predictions=relationship("ChurnPrediction", back_populates="customer", cascade="all, delete-orphan")
 
 
 class ChurnPrediction(Base):
-    """Stores every ML inference result with full audit trail."""
     __tablename__ = "churn_predictions"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     customer_id = Column(Integer, ForeignKey("customers.id"), nullable=False)
     churn_probability = Column(Float, nullable=False)
-    risk_level = Column(String(20), nullable=False)  # LOW, MEDIUM, HIGH
+    risk_level = Column(String(20), nullable=False)
     risk_factors = Column(JSON, default=list)
     recommended_actions = Column(JSON, default=list)
     predicted_at = Column(DateTime, default=datetime.utcnow)
 
-    # Relationships
     customer = relationship("Customer", back_populates="predictions")
     retention_outcome = relationship("RetentionOutcome", back_populates="prediction", uselist=False, cascade="all, delete-orphan")
 
 
 class RetentionOutcome(Base):
-    """Tracks whether prescribed retention actions were accepted or declined."""
     __tablename__ = "retention_outcomes"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     prediction_id = Column(Integer, ForeignKey("churn_predictions.id"), nullable=False, unique=True)
     action_taken = Column(String(200), nullable=True)
-    status = Column(String(50), default="PENDING")  # PENDING, ACCEPTED, DECLINED, CHURNED
+    status = Column(String(50), default="PENDING") 
     notes = Column(String(500), nullable=True)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    # Relationships
     prediction = relationship("ChurnPrediction", back_populates="retention_outcome")
 
 
 def init_db():
-    """Initializes tables in the SQLite database."""
     Base.metadata.create_all(bind=engine)
     print(f"[OK] Database initialized at: {DB_PATH}")
 
 
-def log_prediction(
-    customer_data: Dict[str, Any],
-    churn_prob: float,
-    risk_level: str,
-    risk_factors: List[str],
-    recommended_actions: List[Dict[str, str]]
-) -> int:
-    """Logs customer data, prediction results, and generates a retention outcome record."""
+def log_prediction(customer_data: Dict[str, Any],churn_prob: float,risk_level: str,risk_factors: List[str],recommended_actions: List[Dict[str, str]]) -> int:
     session = SessionLocal()
     try:
-        # Create Customer record
         customer = Customer(
             customer_code=customer_data.get("customer_id") or f"CUST-{int(datetime.utcnow().timestamp())}",
             gender=customer_data.get("gender", "Female"),
@@ -106,7 +82,6 @@ def log_prediction(
         session.add(customer)
         session.flush()
 
-        # Create ChurnPrediction record
         prediction = ChurnPrediction(
             customer_id=customer.id,
             churn_probability=float(churn_prob),
@@ -117,10 +92,8 @@ def log_prediction(
         session.add(prediction)
         session.flush()
 
-        # Create initial RetentionOutcome record
         primary_action = recommended_actions[0].get("title") if recommended_actions else "Monitor Account"
-        outcome = RetentionOutcome(
-            prediction_id=prediction.id,
+        outcome = RetentionOutcome(prediction_id=prediction.id,
             action_taken=primary_action,
             status="PENDING",
             notes="Awaiting retention outreach"
