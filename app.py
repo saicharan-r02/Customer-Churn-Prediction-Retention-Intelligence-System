@@ -66,19 +66,17 @@ def get_retention_intelligence():
     risk_factors =[]
     actions      =[]
 
-
     if contract=="Month-to-month":
         risk_factors.append("Month-to-month contract — these customers have a 43% churn rate "
             "vs only 3% for 2-year contracts")
         actions.append(("🔒 Offer contract upgrade", "Propose a 1-year contract with 15% monthly discount "
             "or a 2-year contract with 25% discount"))
 
-
     if internet=="Fiber optic":
         risk_factors.append(
             "Fiber optic subscriber — churns 2× more than DSL users "
             "(likely due to higher cost and more competition)")
-        if online_security == "No":
+        if online_security=="No":
             actions.append((
                 "🛡️ Free security bundle",
                 "Add Online Security + Device Protection free for 3 months "
@@ -98,25 +96,24 @@ def get_retention_intelligence():
             "Offer a 5% monthly bill discount for switching to "
             "bank transfer or credit card auto-pay"))
 
-
     if tenure<12:
         risk_factors.append(
             f"Low tenure ({tenure} months) — 68% of all churners leave within "
             "the first 12 months before building loyalty")
         actions.append((
             "🎁 Early loyalty programme",
-            "Assign a dedicated account manager for first year + "
+            "Assign a dedicated account manager for first year +"
             f"offer a loyalty gift at 12-month mark (e.g. 1 month free)"))
 
     if monthly_charges>80:
-        saving=round(monthly_charges*0.10,2)
+  
+      saving=round(monthly_charges*0.10,2)
         risk_factors.append(f"High monthly charges (${monthly_charges:.0f}) — "
             "above-average bill increases price sensitivity and competitor appeal")
         actions.append((
             "💰 Loyalty price reduction",
             f"Offer a 10% loyalty discount (saves ${saving:.0f}/month) "
             "for a 6-month service commitment"))
-
 
     if senior=="Yes" and tech_support=="No":
         risk_factors.append(
@@ -126,7 +123,6 @@ def get_retention_intelligence():
             "📞 Senior care plan",
             "Provide complimentary tech support + dedicated priority "
             "customer service line for senior accounts"))
-
 
     has_internet=(internet!="No")
     no_streaming=(streaming_tv=="No" and streaming_movies=="No" and has_internet)
@@ -156,13 +152,13 @@ if st.button("🔍 Predict & Get Retention Plan",
              use_container_width=True, type="primary"):
 
     le_3val = {
-        'MultipleLines':    {'No': 0, 'No phone service': 1, 'Yes': 2},
-        'OnlineSecurity':   {'No': 0, 'No internet service': 1, 'Yes': 2},
-        'OnlineBackup':     {'No': 0, 'No internet service': 1, 'Yes': 2},
-        'DeviceProtection': {'No': 0, 'No internet service': 1, 'Yes': 2},
-        'TechSupport':      {'No': 0, 'No internet service': 1, 'Yes': 2},
-        'StreamingTV':      {'No': 0, 'No internet service': 1, 'Yes': 2},
-        'StreamingMovies':  {'No': 0, 'No internet service': 1, 'Yes': 2},
+        'MultipleLines':    {'No': 0,'No phone service': 1,'Yes': 2},
+        'OnlineSecurity':   {'No': 0,'No internet service': 1,'Yes': 2},
+        'OnlineBackup':     {'No': 0,'No internet service': 1,'Yes': 2},
+        'DeviceProtection': {'No': 0,'No internet service': 1,'Yes': 2},
+        'TechSupport':      {'No': 0,'No internet service': 1,'Yes': 2},
+        'StreamingTV':      {'No': 0,'No internet service': 1,'Yes': 2},
+        'StreamingMovies':  {'No': 0,'No internet service': 1,'Yes': 2},
     }
 
     input_dict = {
